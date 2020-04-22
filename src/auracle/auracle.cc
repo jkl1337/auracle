@@ -491,7 +491,8 @@ int Auracle::BuildOrder(const std::vector<std::string>& args,
   for (const auto& [name, pkg] : total_ordering) {
     const bool satisfied = pacman_->DependencyIsSatisfied(name);
     const bool from_aur = pkg != nullptr;
-    const bool unknown = !from_aur && !pacman_->HasPackage(name);
+    const bool in_repo = pacman_->HasPackage(name);
+    const bool unknown = !from_aur && !in_repo;
     const bool is_target =
         std::find(args.begin(), args.end(), name) != args.end();
 
@@ -506,7 +507,8 @@ int Auracle::BuildOrder(const std::vector<std::string>& args,
 
       if (from_aur) {
         std::cout << "AUR";
-      } else {
+      }
+      if (in_repo) {
         std::cout << "REPOS";
       }
     }
