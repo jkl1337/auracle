@@ -1,2 +1,6 @@
 build/
 subprojects/
+/libs/
+/cmake-build-*/
+compile_commands.json
+/.idea/
